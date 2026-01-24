@@ -86,6 +86,76 @@
         footer { padding: 60px; color: #444; border-top: 1px solid #222; margin-top: 80px; }
 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        /* === RESPONSIVE UPDATES === */
+
+/* 1. Container ko flexible banana */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 15px; /* Mobile par sides se thodi jagah */
+}
+
+/* 2. Header and Logo size for Mobile */
+@media (max-width: 768px) {
+    header { padding: 60px 10px; }
+    .logo { font-size: 2.5rem; }
+    header p { font-size: 1rem; }
+}
+
+/* 3. Input Group Fix (Mobile par buttons niche aa jayenge) */
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 600px) {
+    .input-group {
+        flex-direction: column; /* Input aur Button ek ke niche ek */
+    }
+    input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .btn-main {
+        width: 100%;
+        padding: 15px;
+    }
+    .converter-box {
+        padding: 25px 15px;
+        margin-top: -40px;
+    }
+}
+
+/* 4. Result Card Responsive */
+.card {
+    width: 100%;
+    max-width: 100%; /* Mobile screen se bahar na jaye */
+}
+
+/* 5. Download Buttons (2 columns on Desktop, 1 on Mobile) */
+.dl-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+@media (max-width: 480px) {
+    .dl-btns {
+        grid-template-columns: 1fr; /* Mobile par buttons full width */
+    }
+}
+
+/* 6. Tabs Responsive */
+.platform-tabs {
+    gap: 5px;
+}
+
+@media (max-width: 480px) {
+    .tab {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+    }
+}
     </style>
 </head>
 <body>
