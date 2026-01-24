@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ClipVault | Free YouTube, Instagram & FB Thumbnail Downloader</title>
+    <meta name="description" content="Download high-quality thumbnails and covers from YouTube, Instagram, Facebook, and TikTok. The fastest multi-platform media downloader. 100% Free & Secure.">
+    <meta name="keywords" content="youtube thumbnail downloader, instagram video cover download, facebook image grabber, tiktok thumbnail downloader, clipvault hd">
+    <link rel="canonical" href="http://localhost:3000">
+    <meta name="robots" content="index, follow">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ClipVault Universal Downloader",
+      "url": "http://localhost:3000",
+      "description": "Download thumbnails and media covers from multiple social platforms.",
+      "applicationCategory": "MultimediaApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <style>
+        :root {
+            --primary: #ff0000; --insta: #E1306C; --fb: #1877F2;
+            --bg: #0f0f0f; --card: #1e1e1e; --text: #ffffff; --dim: #aaaaaa;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; text-align: center; line-height: 1.6; }
+        
+        header { padding: 100px 20px; background: linear-gradient(180deg, #1a1a1a 0%, var(--bg) 100%); }
+        .logo { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin: 0; }
+        .logo span { color: var(--primary); }
+        header p { color: var(--dim); margin-top: 10px; font-size: 1.1rem; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+
+        /* MULTI-PLATFORM TABS */
+        .platform-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 25px; flex-wrap: wrap; }
+        .tab { 
+            padding: 10px 22px; border-radius: 30px; background: #222; font-size: 0.9rem; 
+            cursor: pointer; border: 1px solid #333; transition: 0.3s; font-weight: 600;
+        }
+        .tab:hover { border-color: var(--primary); }
+        .tab.active { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px rgba(255,0,0,0.3); }
+
+        /* INPUT AREA */
+        .converter-box {
+            background: var(--card); padding: 45px; border-radius: 28px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6); border: 1px solid #333;
+            margin: -70px auto 40px; max-width: 850px;
+        }
+        .input-group { display: flex; gap: 12px; flex-wrap: wrap; }
+        input { 
+            flex: 1; min-width: 280px; padding: 20px; border-radius: 14px; 
+            border: 2px solid #333; background: #000; color: #fff; font-size: 1.1rem; 
+        }
+        input:focus { border-color: var(--primary); outline: none; }
+        .btn-main { 
+            background: var(--primary); color: #fff; border: none; padding: 0 35px; 
+            border-radius: 14px; font-weight: 800; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; min-height: 60px;
+        }
+
+        /* RESULTS AREA */
+        #resultArea { display: none; margin-top: 40px; animation: fadeInUp 0.6s ease; }
+        .card { background: var(--card); border-radius: 24px; overflow: hidden; border: 1px solid #444; max-width: 650px; margin: 0 auto; }
+        #previewImg { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #000; }
+        .info { padding: 30px; text-align: left; }
+        .dl-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .dl-link { 
+            padding: 15px; border-radius: 10px; text-align: center; text-decoration: none; 
+            color: #fff; font-weight: bold; background: #28a745; transition: 0.3s;
+        }
+        .dl-link:hover { filter: brightness(1.2); transform: translateY(-2px); }
+
+        /* SEO CONTENT SECTION */
+        .seo-content { margin-top: 80px; text-align: left; border-top: 1px solid #222; padding-top: 50px; }
+        .seo-content h2 { color: var(--primary); font-size: 2rem; margin-bottom: 20px; }
+        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 30px; }
+        .faq-item h3 { font-size: 1.2rem; color: #fff; margin-bottom: 8px; }
+        .faq-item p { color: var(--dim); font-size: 0.95rem; }
+
+        footer { padding: 60px; color: #444; border-top: 1px solid #222; margin-top: 80px; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="logo">Clip<span>Vault</span></h1>
+        <p>The Ultimate Multi-Platform HD Thumbnail Downloader</p>
+    </header>
+
+    <div class="container">
+        <section class="converter-box">
+            <div class="platform-tabs" id="tabs">
+                <div class="tab active" onclick="setPlatform('All', 'Paste any link...')">All-in-One</div>
+                <div class="tab" onclick="setPlatform('YouTube', 'Paste YouTube video URL...')">YouTube</div>
+                <div class="tab" onclick="setPlatform('Instagram', 'Paste Instagram post link...')">Instagram</div>
+                <div class="tab" onclick="setPlatform('Facebook', 'Paste Facebook video link...')">Facebook</div>
+            </div>
+            <div class="input-group">
+                <input type="text" id="mediaUrl" placeholder="Paste link from YouTube, Insta, or FB...">
+                <button class="btn-main" onclick="handleDownload()">Grab Media</button>
+            </div>
+        </section>
+
+        <section id="resultArea">
+            <div class="card">
+                <img id="previewImg" src="" alt="Thumbnail Media Preview">
+                <div class="info">
+                    <h2 id="platformTitle" style="margin:0; font-size: 1.5rem;">Media Successfully Found</h2>
+                    <p style="color:var(--dim)">Quality: Ultra HD | Format: JPG</p>
+                    <div class="dl-btns">
+                        <a id="dlHigh" href="" target="_blank" class="dl-link">Download High Res</a>
+                        <a id="dlLow" href="" target="_blank" class="dl-link" style="background:#444">Download Standard</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Universal Thumbnail Downloader for Creators</h2>
+            <p>ClipVault is a professional tool designed to help content creators, designers, and marketers extract high-quality cover images and thumbnails from major social media platforms.</p>
+            
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>YouTube Thumbnail Grabber</h3>
+                    <p>Get 1280x720 HD thumbnails from any YouTube video instantly by pasting the URL.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Instagram Cover Downloader</h3>
+                    <p>Save high-resolution covers from Instagram Reels and Posts for your creative projects.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Facebook Video Image Tool</h3>
+                    <p>Extract thumbnails from Facebook videos in one click. No registration required.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Safe & Fast Downloads</h3>
+                    <p>Our tool doesn't store your data. It's a secure way to grab media directly from source servers.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ClipVault Asset Hub. Made for the creative community.</p>
+    </footer>
+
+    <script>
+        function setPlatform(name, placeholder) {
+            // Update active tab UI
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('mediaUrl').placeholder = placeholder;
+        }
+
+        function handleDownload() {
+            const url = document.getElementById('mediaUrl').value.trim();
+            const preview = document.getElementById('previewImg');
+            const result = document.getElementById('resultArea');
+            const title = document.getElementById('platformTitle');
+
+            if (url.includes("youtube.com") || url.includes("youtu.be")) {
+                const regex = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=))([^"&?\/\s]{11})/;
+                const match = url.match(regex);
+                if(match) {
+                    const thumb = `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg`;
+                    preview.src = thumb;
+                    document.getElementById('dlHigh').href = thumb;
+                    title.innerText = "YouTube HD Thumbnail Found";
+                    result.style.display = "block";
+                    window.scrollTo({ top: result.offsetTop - 50, behavior: 'smooth' });
+                }
+            } else if (url.includes("instagram.com") || url.includes("facebook.com")) {
+                alert("This platform requires Backend API to scrape private data. Currently only YouTube is active on this demo.");
+            } else {
+                alert("Please enter a valid link!");
+            }
+        }
+
+        async function handleDownload() {
+    const url = document.getElementById('mediaUrl').value.trim();
+    const resultArea = document.getElementById('resultArea');
+    const preview = document.getElementById('previewImg');
+    const title = document.getElementById('platformTitle');
+
+    if (!url) return alert("Paste a link first!");
+
+    try {
+        // Apne backend API ko call karna
+        const response = await fetch(`http://localhost:3000/api/extract?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+
+        if (data.error) {
+            alert(data.error);
+        } else {
+            // Data ko UI par dikhana
+            preview.src = data.thumbnail;
+            title.innerText = `${data.platform} Media Found`;
+            document.getElementById('dlHigh').href = data.high;
+            document.getElementById('dlLow').href = data.low;
+            
+            resultArea.style.display = "block";
+            window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+        }
+    } catch (err) {
+        alert("Server connection failed. Make sure backend is running!");
+    }
+}
+    </script>
+</body>
+</html>
