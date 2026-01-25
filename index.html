@@ -254,33 +254,54 @@
             }
         }
 
+//         async function handleDownload() {
+//     const url = document.getElementById('mediaUrl').value.trim();
+//     const resultArea = document.getElementById('resultArea');
+//     const preview = document.getElementById('previewImg');
+//     const title = document.getElementById('platformTitle');
+
+//     if (!url) return alert("Paste a link first!");
+
+//     try {
+//         // Apne backend API ko call karna
+//         const response = await fetch(`http://localhost:3000/api/extract?url=${encodeURIComponent(url)}`);
+//         const data = await response.json();
+
+//         if (data.error) {
+//             alert(data.error);
+//         } else {
+//             // Data ko UI par dikhana
+//             preview.src = data.thumbnail;
+//             title.innerText = `${data.platform} Media Found`;
+//             document.getElementById('dlHigh').href = data.high;
+//             document.getElementById('dlLow').href = data.low;
+            
+//             resultArea.style.display = "block";
+//             window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
+//         }
+//     } catch (err) {
+//         alert("Server connection failed. Make sure backend is running!");
+//     }
+// }
+
         async function handleDownload() {
     const url = document.getElementById('mediaUrl').value.trim();
-    const resultArea = document.getElementById('resultArea');
-    const preview = document.getElementById('previewImg');
-    const title = document.getElementById('platformTitle');
+    
+    // Check if we are running on localhost or on the internet
+    const API_BASE = window.location.hostname === "localhost" 
+        ? "http://localhost:3000" 
+        : "https://your-backend-name.onrender.com";
 
-    if (!url) return alert("Paste a link first!");
+    // ... rest of your code ...
 
     try {
-        // Apne backend API ko call karna
-        const response = await fetch(`http://localhost:3000/api/extract?url=${encodeURIComponent(url)}`);
+        // Use the dynamic API_BASE variable here
+        const response = await fetch(`${API_BASE}/api/extract?url=${encodeURIComponent(url)}`);
         const data = await response.json();
-
-        if (data.error) {
-            alert(data.error);
-        } else {
-            // Data ko UI par dikhana
-            preview.src = data.thumbnail;
-            title.innerText = `${data.platform} Media Found`;
-            document.getElementById('dlHigh').href = data.high;
-            document.getElementById('dlLow').href = data.low;
-            
-            resultArea.style.display = "block";
-            window.scrollTo({ top: resultArea.offsetTop - 50, behavior: 'smooth' });
-        }
+        
+        // ... rest of your logic ...
     } catch (err) {
-        alert("Server connection failed. Make sure backend is running!");
+        alert("Server connection failed!");
     }
 }
     </script>
