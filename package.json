@@ -2,10 +2,11 @@
   "name": "clipvault",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "node server.js"
-    "vercal-start":"node server.js"
+    "test": "node server.js",
+    "vercel-build": "echo 'No build step needed'",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
